@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI DARK WORLD - Ultimate Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- AI DARK THEME --- */
+        :root {
+            --primary-color: #00f3ff;
+            --bg-color: #050505;
+            --card-bg: #111111;
+            --text-color: #e0e0e0;
+            --menu-bg: #1a1a1a;
+            --glow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* HEADER */
+        header {
+            background-color: #000;
+            border-bottom: 1px solid #333;
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            position: fixed; top: 0; z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+        }
+        header h1 { margin: 0; font-size: 24px; letter-spacing: 3px; text-transform: uppercase; text-shadow: var(--glow); }
+        header span { color: var(--primary-color); }
+
+        .menu-btn {
+            position: absolute; left: 20px; top: 20px;
+            font-size: 24px; color: var(--primary-color);
+            cursor: pointer; background: none; border: none;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            height: 100%; width: 0; position: fixed; top: 0; left: 0;
+            background-color: var(--menu-bg); overflow-x: hidden;
+            transition: 0.4s; padding-top: 60px; z-index: 1050;
+            border-right: 1px solid #333; box-shadow: 5px 0 15px rgba(0,0,0,0.8);
+        }
+        .sidebar a {
+            padding: 15px 25px; text-decoration: none; font-size: 18px;
+            color: #ccc; display: block; border-bottom: 1px solid #222; cursor: pointer;
+        }
+        .sidebar a:hover { color: var(--primary-color); background: #222; padding-left: 35px; }
+        .sidebar .close-btn { position: absolute; top: 10px; right: 20px; font-size: 36px; }
+
+        /* GENERAL LAYOUT */
+        .main-wrapper { margin-top: 100px; display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 50px; }
+        .ad-banner { width: 90%; max-width: 728px; height: 90px; background: #111; border: 1px dashed #444; margin: 20px 0; display: flex; align-items: center; justify-content: center; color: #555; }
+        
+        .page-section { width: 100%; display: flex; flex-direction: column; align-items: center; animation: fadeIn 0.5s; }
+        .hidden-section { display: none; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- SEARCH & TOOLS STYLES --- */
+        .search-container {
+            width: 90%; max-width: 500px; margin-bottom: 30px; position: relative;
+        }
+        .search-box {
+            width: 100%; padding: 15px; border-radius: 50px;
+            background: #111; border: 2px solid #333; color: #fff;
+            font-size: 16px; outline: none; text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+        .search-box:focus { border-color: var(--primary-color); box-shadow: var(--glow); }
+
+        .tools-grid {
+            display: flex; flex-direction: column; gap: 20px; width: 90%; max-width: 500px;
+        }
+
+        .tool-card {
+            background: var(--card-bg); padding: 20px; border-radius: 12px;
+            border: 1px solid #333; display: flex; align-items: center; justify-content: space-between;
+            transition: 0.3s; cursor: pointer;
+        }
+        .tool-card:hover { transform: scale(1.02); border-color: var(--primary-color); }
+        
+        .tool-info { display: flex; align-items: center; gap: 15px; }
+        .tool-icon { font-size: 24px; color: var(--primary-color); width: 40px; text-align: center; }
+        .tool-name { font-size: 18px; font-weight: bold; color: #fff; text-transform: uppercase; }
+        .download-icon { color: #555; font-size: 20px; }
+
+        /* --- DOWNLOAD TIMER PAGE STYLES --- */
+        .download-view {
+            text-align: center; width: 90%; max-width: 450px;
+            background: var(--card-bg); padding: 40px 20px; border-radius: 15px;
+            border: 1px solid #333; box-shadow: 0 0 40px rgba(0,0,0,0.6);
+            display: none; /* Hidden initially */
+        }
+        
+        .timer-circle {
+            font-size: 40px; color: var(--primary-color); font-weight: bold;
+            margin: 20px 0; text-shadow: var(--glow);
+        }
+
+        .btn {
+            background: transparent; color: var(--primary-color); border: 2px solid var(--primary-color);
+            padding: 15px 30px; width: 100%; font-size: 18px; cursor: pointer;
+            font-weight: bold; text-transform: uppercase; transition: 0.3s; margin-top: 20px;
+        }
+        .btn:hover { background: var(--primary-color); color: #000; }
+        .btn-green { background: #28a745; color: white; border-color: #28a745; }
+        .btn-green:hover { background: #218838; }
+
+        footer { margin-top: auto; padding: 20px; color: #555; font-size: 12px; text-align: center; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+        <h1>AI <span>DARK</span> WORLD</h1>
+    </header>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleMenu()">&times;</a>
+        
+        <a onclick="showSection('home')"><i class="fas fa-home"></i> Home</a>
+        <a onclick="showSection('tools')" style="color: var(--primary-color);"><i class="fas fa-tools"></i> <b>Premium Tools</b></a>
+        <a onclick="showSection('prompts')"><i class="fas fa-terminal"></i> AI Prompts</a>
+        
+        <br>
+        <div style="padding-left: 25px; color: #666; font-size: 12px; text-transform: uppercase;">Social Media</div>
+        <a href="#" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+        <a href="https://youtube.com/@ai_darkworld?si=-QEy0U3i54cCuNYo" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+        <a href="https://whatsapp.com/channel/0029VaeXuC8DjiOXwN0Gqi19" target="_blank"><i class="fab fa-whatsapp"></i> WA Channel</a>
+    </div>
+
+    <div class="main-wrapper">
+
+        <div class="ad-banner">TOP AD BANNER (728x90)</div>
+
+        <div id="home-section" class="page-section">
+            <div style="text-align: center; max-width: 600px; margin-bottom: 20px;">
+                <h3 style="color: #fff;">SYSTEM STATUS: ONLINE</h3>
+                <p style="color: #888;">Welcome to AI Dark World. Select a module from the menu.</p>
+            </div>
+            </div>
+
+        <div id="tools-section" class="page-section hidden-section">
+            
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h2 style="color: #fff;">PREMIUM TOOLS</h2>
+                <p style="color: #aaa;">Search and download premium unlocked apps.</p>
+            </div>
+
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-box" onkeyup="filterTools()" placeholder="Search Tools (e.g. CapCut)...">
+            </div>
+
+            <div class="tools-grid" id="toolsList">
+                
+                <div class="tool-card" onclick="openDownloadPage('capcut')">
+                    <div class="tool-info">
+                        <i class="fas fa-cut tool-icon"></i>
+                        <span class="tool-name">CapCut Premium</span>
+                    </div>
+                    <i class="fas fa-download download-icon"></i>
+                </div>
+
+                <div class="tool-card" onclick="openDownloadPage('wink')">
+                    <div class="tool-info">
+                        <i class="fas fa-smile-wink tool-icon"></i>
+                        <span class="tool-name">Wink Premium</span>
+                    </div>
+                    <i class="fas fa-download download-icon"></i>
+                </div>
+
+                <div class="tool-card" onclick="openDownloadPage('filmora')">
+                    <div class="tool-info">
+                        <i class="fas fa-video tool-icon"></i>
+                        <span class="tool-name">Filmora Premium</span>
+                    </div>
+                    <i class="fas fa-download download-icon"></i>
+                </div>
+
+                <div class="tool-card" onclick="openDownloadPage('tiktok')">
+                    <div class="tool-info">
+                        <i class="fab fa-tiktok tool-icon"></i>
+                        <span class="tool-name">TikTok Premium</span>
+                    </div>
+                    <i class="fas fa-download download-icon"></i>
+                </div>
+
+                <div class="tool-card" onclick="openDownloadPage('vpn')">
+                    <div class="tool-info">
+                        <i class="fas fa-shield-alt tool-icon"></i>
+                        <span class="tool-name">VPN Premium</span>
+                    </div>
+                    <i class="fas fa-download download-icon"></i>
+                </div>
+
+            </div>
+
+            <div id="download-screen" class="download-view">
+                <h2 id="selectedToolName" style="color: #fff;">TOOL NAME</h2>
+                <p>Generating secure download link...</p>
+                
+                <div class="ad-banner" style="width:100%; height: 250px;">SQUARE AD (300x250)</div>
+
+                <div id="timer-box">
+                    <p style="color: #888;">Please wait</p>
+                    <div class="timer-circle" id="countdown">15</div>
+                    <p style="color: #888;">seconds</p>
+                </div>
+
+                <div id="final-download-btn" style="display: none;">
+                    <button class="btn btn-green" onclick="goToFinalLink()">DOWNLOAD FILE NOW</button>
+                </div>
+
+                <br>
+                <button onclick="backToTools()" style="background:none; border:none; color:#666; cursor:pointer; margin-top:10px;">&larr; Back to List</button>
+            </div>
+
+        </div>
+
+        <div id="prompts-section" class="page-section hidden-section">
+            <h2 style="color: #fff; margin-bottom: 20px;">ADVANCED PROMPTS</h2>
+            <div style="background:var(--card-bg); padding:20px; border:1px solid #333; width:85%; border-radius:8px;">
+                <h4 style="color:#fff; margin:0 0 10px 0;">Cyberpunk Portrait</h4>
+                <p style="color:#aaa; font-size:13px; background:#000; padding:10px;">Hyper-realistic cyberpunk warrior, neon lights, 8k resolution...</p>
+                <button style="background:#222; color:var(--primary-color); border:1px solid var(--primary-color); padding:5px 10px; margin-top:10px; cursor:pointer;">COPY</button>
+            </div>
+        </div>
+
+        <div class="ad-banner">BOTTOM AD BANNER (728x90)</div>
+
+    </div>
+
+    <footer>© 2025 AI DARK WORLD</footer>
+
+    <script>
+        // ==========================================
+        // 1. APNE LINKS YAHAN PASTE KAREIN
+        // ==========================================
+        const toolLinks = {
+            'capcut': "https://drive.google.com/link_for_capcut",
+            'wink': "https://mega.nz/link_for_wink",
+            'filmora': "https://drive.google.com/link_for_filmora",
+            'tiktok': "https://drive.google.com/link_for_tiktok",
+            'vpn': "https://drive.google.com/link_for_vpn"
+        };
+
+        let currentActiveLink = ""; // Link store karne ke liye
+
+        // --- MENU LOGIC ---
+        function toggleMenu() {
+            var sidebar = document.getElementById("mySidebar");
+            sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
+        }
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.getElementById('home-section').classList.add('hidden-section');
+            document.getElementById('tools-section').classList.add('hidden-section');
+            document.getElementById('prompts-section').classList.add('hidden-section');
+            
+            // Show selected
+            document.getElementById(sectionId + '-section').classList.remove('hidden-section');
+            
+            // Close sidebar
+            document.getElementById("mySidebar").style.width = "0";
+
+            // Reset tools view if going to tools
+            if(sectionId === 'tools') {
+                backToTools();
+            }
+        }
+
+        // --- SEARCH FILTER LOGIC ---
+        function filterTools() {
+            var input = document.getElementById('searchInput');
+            var filter = input.value.toUpperCase();
+            var list = document.getElementById("toolsList");
+            var items = list.getElementsByClassName('tool-card');
+
+            for (var i = 0; i < items.length; i++) {
+                var txtValue = items[i].textContent || items[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    items[i].style.display = "";
+                } else {
+                    items[i].style.display = "none";
+                }
+            }
+        }
+
+        // --- DOWNLOAD TIMER LOGIC ---
+        function openDownloadPage(toolKey) {
+            // 1. Tool Link Set karein
+            currentActiveLink = toolLinks[toolKey];
+            
+            // 2. Naam update karein
+            document.getElementById('selectedToolName').innerText = toolKey.toUpperCase() + " PREMIUM";
+
+            // 3. List chupao, Download Screen dikhao
+            document.getElementById('toolsList').style.display = 'none';
+            document.getElementById('searchInput').style.display = 'none'; // Search bhi chupao
+            document.getElementById('download-screen').style.display = 'block';
+
+            // 4. Timer Reset & Start
+            document.getElementById('timer-box').style.display = 'block';
+            document.getElementById('final-download-btn').style.display = 'none';
+            
+            let timeLeft = 15;
+            document.getElementById('countdown').innerText = timeLeft;
+
+            const countdownInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('countdown').innerText = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    // Timer khatam -> Button dikhao
+                    document.getElementById('timer-box').style.display = 'none';
+                    document.getElementById('final-download-btn').style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        function goToFinalLink() {
+            if(currentActiveLink) {
+                window.open(currentActiveLink, '_blank');
+            } else {
+                alert("Link not set yet!");
+            }
+        }
+
+        function backToTools() {
+            document.getElementById('download-screen').style.display = 'none';
+            document.getElementById('toolsList').style.display = 'flex';
+            document.getElementById('searchInput').style.display = 'block';
+        }
+
+    </script>
+</body>
+</html>
