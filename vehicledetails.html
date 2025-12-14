@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="monetag" content="039d41400cbc73753352a409ab7d3662">
+    <title>Vehicle Details | AI DARK WORLD</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary: #00f3ff; --bg: #050505; --card: #111111; --text: #e0e0e0; --glow: 0 0 10px rgba(0, 243, 255, 0.5); }
+        body { font-family: 'Courier New', monospace; background: var(--bg); color: var(--text); padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        
+        .container { width: 100%; max-width: 600px; }
+
+        header { text-align: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 15px; position: relative; }
+        .back-btn { position: absolute; left: 0; top: 0; color: #666; font-size: 20px; text-decoration: none; }
+        .back-btn:hover { color: var(--primary); }
+        h1 { font-size: 22px; margin: 0; text-transform: uppercase; text-shadow: var(--glow); }
+        h1 span { color: var(--primary); }
+
+        .input-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        input { background: #000; border: 1px solid #333; color: var(--primary); padding: 15px; font-family: inherit; outline: none; border-radius: 4px; text-align: center; text-transform: uppercase; letter-spacing: 2px; }
+        input:focus { border-color: var(--primary); box-shadow: var(--glow); }
+
+        button { width: 100%; background: var(--primary); color: #000; border: none; padding: 15px; cursor: pointer; font-weight: bold; font-family: inherit; transition: 0.3s; margin-top: 10px; }
+        button:hover { background: #00d2dd; box-shadow: var(--glow); }
+
+        .details-box { display: none; background: var(--card); border: 1px solid #333; padding: 20px; border-radius: 8px; }
+        .row { display: flex; justify-content: space-between; border-bottom: 1px solid #222; padding: 10px 0; }
+        .key { color: #888; font-size: 12px; }
+        .val { color: #fff; font-weight: bold; text-align: right; }
+
+        .loader { display: none; width: 30px; height: 30px; border: 3px solid #333; border-top-color: var(--primary); border-radius: 50%; animation: spin 1s infinite linear; margin: 20px auto; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .ad-banner { width: 100%; height: 70px; border: 1px dashed #333; margin: 20px 0; display: flex; align-items: center; justify-content: center; color: #444; cursor: pointer; font-size: 12px; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+        <h1>VEHICLE <span>DETAILS</span></h1>
+    </header>
+
+    <div class="ad-banner" onclick="openDirectLink()">[ AD SPACE - CLICK HERE ]</div>
+
+    <div class="input-group">
+        <label style="color:#666; font-size:12px;">ENTER RC NUMBER</label>
+        <input type="text" id="rcNumber" placeholder="e.g. KL43G1669">
+        <button onclick="getDetails()">FETCH DETAILS</button>
+    </div>
+
+    <div class="loader" id="loader"></div>
+    <div id="resultBox" class="details-box"></div>
+
+    <div class="ad-banner" onclick="openDirectLink()">[ AD SPACE - CLICK HERE ]</div>
+</div>
+
+<script>
+    function openDirectLink() { window.open("https://otieu.com/4/10322143", "_blank"); }
+
+    async function getDetails() {
+        openDirectLink(); // Ad Trigger
+
+        const rc = document.getElementById('rcNumber').value.trim().toUpperCase();
+        if(!rc) return alert("Please Enter RC Number");
+
+        const box = document.getElementById('resultBox');
+        const loader = document.getElementById('loader');
+
+        box.style.display = 'none';
+        loader.style.display = 'block';
+        box.innerHTML = '';
+
+        try {
+            const url = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent('https://vehicle-eight-vert.vercel.app/api?rc=' + rc)}`;
+            const res = await fetch(url);
+            const data = await res.json();
+
+            loader.style.display = 'none';
+            box.style.display = 'block';
+
+            if(data.details) {
+                for(let key in data.details) {
+                    if(data.details[key]) {
+                        box.innerHTML += `
+                            <div class="row">
+                                <span class="key">${key}</span>
+                                <span class="val">${data.details[key]}</span>
+                            </div>`;
+                    }
+                }
+            } else {
+                box.innerHTML = `<p style="color:red; text-align:center;">NO DATA FOUND</p>`;
+            }
+
+        } catch(e) {
+            loader.style.display = 'none';
+            alert("Error fetching data");
+        }
+    }
+</script>
+</body>
+</html>
