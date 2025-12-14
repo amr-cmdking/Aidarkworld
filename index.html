@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="monetag" content="039d41400cbc73753352a409ab7d3662">
+
     <title>AI DARK WORLD - Ultimate Store</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -114,8 +117,18 @@
             font-weight: bold; text-transform: uppercase; transition: 0.3s; margin-top: 20px;
         }
         .btn:hover { background: var(--primary-color); color: #000; }
-        .btn-green { background: #28a745; color: white; border-color: #28a745; }
-        .btn-green:hover { background: #218838; }
+        
+        /* Updated Button Style to Match Teal Theme */
+        .btn-download { 
+            background: var(--primary-color); 
+            color: #000; 
+            border-color: var(--primary-color); 
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+        }
+        .btn-download:hover { 
+            background: #00d2dd; 
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.6);
+        }
 
         footer { margin-top: auto; padding: 20px; color: #555; font-size: 12px; text-align: center; }
 
@@ -221,7 +234,7 @@
                 </div>
 
                 <div id="final-download-btn" style="display: none;">
-                    <button class="btn btn-green" onclick="goToFinalLink()">DOWNLOAD FILE NOW</button>
+                    <button class="btn btn-download" onclick="goToFinalLink()">DOWNLOAD FILE NOW</button>
                 </div>
 
                 <br>
@@ -349,4 +362,5 @@
 
     </script>
 </body>
-</html>
+        </html>
+            
