@@ -17,6 +17,8 @@
             --bg-dark: #050505;
             --text-color: #ffffff;
             --primary: #00f3ff;
+            --whatsapp: #25D366;
+            --telegram: #0088cc;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
@@ -30,10 +32,16 @@
             min-height: 100vh;
             padding: 15px;
             overflow-x: hidden;
-            /* Subtle Background Mesh */
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 243, 255, 0.05) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(138, 43, 226, 0.05) 0%, transparent 20%);
+            position: relative;
+        }
+
+        /* --- LIVE BACKGROUND CANVAS --- */
+        #bgCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #0a101f 0%, #000000 100%);
         }
 
         /* --- HEADER --- */
@@ -72,45 +80,58 @@
             width: 100%;
             max-width: 600px;
             height: 140px;
-            margin: 15px 0 25px 0;
+            margin: 15px 0 15px 0;
             border-radius: 16px;
             overflow: hidden;
             position: relative;
             cursor: pointer;
-            /* 3D Depth Shadow for Banner */
             box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 1px rgba(255,255,255,0.2) inset;
             border: 1px solid rgba(255,255,255,0.1);
         }
 
         .ad-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s;
         }
-
-        .ad-container:hover .ad-image {
-            transform: scale(1.05);
-        }
+        .ad-container:hover .ad-image { transform: scale(1.05); }
 
         .ad-tag {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(0,0,0,0.8);
-            color: var(--primary);
-            font-size: 10px;
-            padding: 4px 8px;
-            border-radius: 6px;
-            border: 1px solid var(--primary);
-            backdrop-filter: blur(4px);
-            z-index: 2;
+            position: absolute; top: 10px; right: 10px;
+            background: rgba(0,0,0,0.8); color: var(--primary);
+            font-size: 10px; padding: 4px 8px; border-radius: 6px;
+            border: 1px solid var(--primary); backdrop-filter: blur(4px); z-index: 2;
         }
+
+        /* --- SOCIAL CHANNELS SECTION (NEW) --- */
+        .social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 25px;
+        }
+
+        .social-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 12px; border-radius: 12px;
+            text-decoration: none; font-weight: bold; font-size: 14px;
+            transition: 0.3s; border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(5px);
+            position: relative; overflow: hidden;
+        }
+
+        /* WhatsApp Style */
+        .wa-btn { border-color: var(--whatsapp); color: var(--whatsapp); box-shadow: 0 0 10px rgba(37, 211, 102, 0.1); }
+        .wa-btn:hover { background: var(--whatsapp); color: #000; box-shadow: 0 0 20px var(--whatsapp); transform: translateY(-3px); }
+
+        /* Telegram Style */
+        .tg-btn { border-color: var(--telegram); color: var(--telegram); box-shadow: 0 0 10px rgba(0, 136, 204, 0.1); }
+        .tg-btn:hover { background: var(--telegram); color: #fff; box-shadow: 0 0 20px var(--telegram); transform: translateY(-3px); }
 
         /* --- 3D GRID LAYOUT --- */
         .grid {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* 2 Columns */
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
             width: 100%;
             max-width: 600px;
@@ -120,135 +141,79 @@
         /* --- ULTRA 3D CARD DESIGN --- */
         .card {
             position: relative;
-            height: 140px; /* Fixed height for consistency */
+            height: 140px;
             border-radius: 20px;
             text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             transition: all 0.4s ease;
-            
-            /* The 3D Magic: Gradient Background + Multi-layer Shadows */
             background: linear-gradient(145deg, #161618, #0a0a0c);
-            box-shadow:  
-                8px 8px 16px rgba(0,0,0,0.6), 
-                -4px -4px 12px rgba(255,255,255,0.05),
-                inset 1px 1px 0 rgba(255,255,255,0.1); /* Inner rim light */
-            
+            box-shadow: 8px 8px 16px rgba(0,0,0,0.6), -4px -4px 12px rgba(255,255,255,0.05), inset 1px 1px 0 rgba(255,255,255,0.1);
             border: 1px solid rgba(255,255,255,0.02);
             overflow: hidden;
         }
 
-        /* Hover Lift Effect */
         .card:hover {
             transform: translateY(-8px);
-            box-shadow: 
-                0 15px 30px rgba(0,0,0,0.8), 
-                0 0 15px var(--glow-color); /* Dynamic Glow Color */
+            box-shadow: 0 15px 30px rgba(0,0,0,0.8), 0 0 15px var(--glow-color);
             border-color: var(--glow-color);
         }
 
-        /* Icon Styling */
         .card i {
-            font-size: 32px;
-            margin-bottom: 12px;
-            /* Gradient Icon */
+            font-size: 32px; margin-bottom: 12px;
             background: linear-gradient(180deg, #fff, #888);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-            transition: 0.3s;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); transition: 0.3s;
         }
 
         .card:hover i {
-            background: #fff;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: #fff;
+            background: #fff; -webkit-background-clip: text; -webkit-text-fill-color: #fff;
             text-shadow: 0 0 15px var(--glow-color);
         }
 
         .card span {
-            color: #ccc;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            color: #ccc; font-size: 14px; font-weight: 600;
+            letter-spacing: 0.5px; text-transform: uppercase;
         }
 
-        /* Specific Glow Colors for each card */
-        .tiktok-glow { --glow-color: #d946ef; } /* Purple/Pink */
-        .sora-glow { --glow-color: #00f3ff; }   /* Cyan */
-        .paksim-glow { --glow-color: #00ff88; } /* Green */
-        .tv-glow { --glow-color: #ff5e00; }     /* Orange */
-        .apk-glow { --glow-color: #2b6eff; }    /* Blue */
+        .tiktok-glow { --glow-color: #d946ef; }
+        .sora-glow { --glow-color: #00f3ff; }
+        .paksim-glow { --glow-color: #00ff88; }
+        .tv-glow { --glow-color: #ff5e00; }
+        .apk-glow { --glow-color: #2b6eff; }
 
-        /* Badge Styling */
         .badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--glow-color);
-            color: #000;
-            font-size: 9px;
-            font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 12px;
-            box-shadow: 0 0 10px var(--glow-color);
+            position: absolute; top: 10px; right: 10px;
+            background: var(--glow-color); color: #000;
+            font-size: 9px; font-weight: 800; padding: 3px 8px;
+            border-radius: 12px; box-shadow: 0 0 10px var(--glow-color);
         }
 
         /* --- SIDEBAR --- */
         .sidebar {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            z-index: 1000;
-            top: 0;
-            left: 0;
-            background-color: rgba(5, 5, 5, 0.95);
-            backdrop-filter: blur(10px);
-            overflow-x: hidden;
-            transition: 0.4s;
-            padding-top: 60px;
+            height: 100%; width: 0; position: fixed; z-index: 1000;
+            top: 0; left: 0; background-color: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(10px); overflow-x: hidden;
+            transition: 0.4s; padding-top: 60px;
             border-right: 1px solid rgba(255,255,255,0.1);
         }
         
         .sidebar a {
-            padding: 15px 25px;
-            text-decoration: none;
-            font-size: 16px;
-            color: #ccc;
-            display: block;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            transition: 0.3s;
+            padding: 15px 25px; text-decoration: none; font-size: 16px;
+            color: #ccc; display: block; border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s; display: flex; align-items: center; gap: 10px;
         }
 
-        .sidebar a:hover {
-            color: var(--primary);
-            background: rgba(255,255,255,0.05);
-            padding-left: 30px;
-        }
-
-        .sidebar .closebtn {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 30px;
-            border: none;
-        }
+        .sidebar a:hover { color: var(--primary); background: rgba(255,255,255,0.05); padding-left: 30px; }
+        .sidebar .closebtn { position: absolute; top: 10px; right: 20px; font-size: 30px; border: none; }
 
         /* --- FOOTER --- */
-        footer {
-            margin-top: auto;
-            color: #555;
-            font-size: 11px;
-            text-align: center;
-            letter-spacing: 1px;
-        }
+        footer { margin-top: auto; color: #555; font-size: 11px; text-align: center; letter-spacing: 1px; }
 
     </style>
 </head>
 <body>
+
+    <canvas id="bgCanvas"></canvas>
 
     <header>
         <button class="menu-btn" onclick="toggleNav()"><i class="fas fa-bars"></i></button>
@@ -259,9 +224,18 @@
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        
+        <a href="https://whatsapp.com/channel/0029VaeXuC8DjiOXwN0Gqi19" target="_blank" style="color: var(--whatsapp);">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+        <a href="https://t.me/aidarkworld" target="_blank" style="color: var(--telegram);">
+            <i class="fab fa-telegram-plane"></i> Telegram
+        </a>
+
+        <div style="height: 1px; background: #333; margin: 10px 0;"></div>
+
         <a href="TikTok.html"><i class="fab fa-tiktok"></i> TikTok Downloader</a>
         <a href="sora.html"><i class="fas fa-video"></i> Sora AI</a>
-        <a href="#" onclick="openLink()"><i class="fas fa-envelope"></i> Contact</a>
     </div>
 
     <div class="ad-container" onclick="openLink()">
@@ -269,8 +243,16 @@
         <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=600&auto=format&fit=crop" class="ad-image" alt="Tech Banner">
     </div>
 
+    <div class="social-grid">
+        <a href="https://whatsapp.com/channel/0029VaeXuC8DjiOXwN0Gqi19" target="_blank" class="social-btn wa-btn">
+            <i class="fab fa-whatsapp" style="font-size: 20px;"></i> Join WhatsApp
+        </a>
+        <a href="https://t.me/aidarkworld" target="_blank" class="social-btn tg-btn">
+            <i class="fab fa-telegram-plane" style="font-size: 20px;"></i> Join Telegram
+        </a>
+    </div>
+
     <div class="grid">
-        
         <a href="TikTok.html" class="card tiktok-glow">
             <div class="badge">HOT</div>
             <i class="fab fa-tiktok"></i>
@@ -297,7 +279,6 @@
             <i class="fas fa-tv"></i>
             <span>Infinity TV</span>
         </a>
-
     </div>
 
     <div class="ad-container" style="height: 100px;" onclick="openLink()">
@@ -313,22 +294,39 @@
     <script src="https://quge5.com/88/tag.min.js" data-zone="194543" async data-cfasync="false"></script>
 
     <script>
-        // Apka Monetag Link
-        function openLink() {
-            window.open("https://otieu.com/4/10322143", "_blank");
-        }
+        // --- LIVE ANIMATION (Neural Network) ---
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
 
-        // Sidebar Logic
-        function toggleNav() {
-            var sidebar = document.getElementById("mySidebar");
-            if (sidebar.style.width === "250px") {
-                sidebar.style.width = "0";
-            } else {
-                sidebar.style.width = "250px";
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeCanvas); resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.5 - 0.25; this.speedY = Math.random() * 0.5 - 0.25;
+            }
+            update() {
+                this.x += this.speedX; this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0; if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0; if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = '#00f3ff'; ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
-    </script>
 
-</body>
-                                             </html>
-                
+        function init() { for(let i=0; i<canvas.width*canvas.height/9000; i++) particles.push(new Particle()); }
+        function animate() {
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.1)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                 
