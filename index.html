@@ -1,113 +1,334 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="description" content="AI Dark World - Free Sora Video Downloader. The ultimate store for AI tools and video downloading.">
-    <meta name="keywords" content="AI Dark World, Sora Video Downloader, AI Dark World Sora, Sora Downloader Free, AI Dark World Downloader, AI Tools">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="monetag" content="039d41400cbc73753352a409ab7d3662">
-    <title>AI DARK WORLD - Home</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="description" content="AI Dark World - Premium Tools">
     
+    <meta name="monetag" content="039d41400cbc73753352a409ab7d3662">
+    
+    <title>AI DARK WORLD | Premium</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        :root { --primary: #00f3ff; --bg: #050505; --card: #111111; --text: #e0e0e0; --glow: 0 0 10px rgba(0, 243, 255, 0.5); }
-        body { font-family: 'Courier New', monospace; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        
-        header { text-align: center; margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 20px; width: 100%; max-width: 600px; }
-        h1 { font-size: 28px; text-transform: uppercase; text-shadow: var(--glow); margin: 0; }
-        h1 span { color: var(--primary); }
-        
-        .menu-btn { position: absolute; left: 20px; top: 20px; font-size: 24px; color: var(--primary); cursor: pointer; background: none; border: none; }
-        
-        /* SIDEBAR */
-        .sidebar { height: 100%; width: 0; position: fixed; top: 0; left: 0; background-color: #1a1a1a; overflow-x: hidden; transition: 0.4s; padding-top: 60px; z-index: 1050; border-right: 1px solid #333; }
-        .sidebar a { padding: 15px 25px; text-decoration: none; font-size: 18px; color: #ccc; display: block; border-bottom: 1px solid #222; }
-        .sidebar a:hover { color: var(--primary); background: #222; }
-        .sidebar .close-btn { position: absolute; top: 10px; right: 20px; font-size: 36px; }
+        :root {
+            --bg-dark: #050505;
+            --text-color: #ffffff;
+            --primary: #00f3ff;
+        }
 
-        /* GRID */
-        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 600px; margin-top: 20px; }
-        .grid-card { background: var(--card); border: 1px solid #333; padding: 25px; border-radius: 12px; text-align: center; cursor: pointer; transition: 0.3s; text-decoration: none; color: var(--text); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
-        .grid-card:hover { border-color: var(--primary); box-shadow: var(--glow); transform: translateY(-5px); }
-        
-        .grid-icon { font-size: 32px; color: var(--primary); }
-        .grid-name { font-size: 14px; font-weight: bold; text-transform: uppercase; }
-        .new-badge { font-size: 10px; background: var(--primary); color: #000; padding: 2px 6px; border-radius: 4px; font-weight: bold; margin-left: 5px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
-        .ad-banner { width: 100%; max-width: 600px; height: 80px; border: 1px dashed #333; margin: 20px 0; display: flex; align-items: center; justify-content: center; color: #444; cursor: pointer; font-size: 12px; }
-        .ad-banner:hover { border-color: var(--primary); color: var(--primary); }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
+            overflow-x: hidden;
+            /* Subtle Background Mesh */
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 243, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(138, 43, 226, 0.05) 0%, transparent 20%);
+        }
+
+        /* --- HEADER --- */
+        header {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* --- 3D AD BANNER --- */
+        .ad-container {
+            width: 100%;
+            max-width: 600px;
+            height: 140px;
+            margin: 15px 0 25px 0;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            /* 3D Depth Shadow for Banner */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 1px rgba(255,255,255,0.2) inset;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .ad-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .ad-container:hover .ad-image {
+            transform: scale(1.05);
+        }
+
+        .ad-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: var(--primary);
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            border: 1px solid var(--primary);
+            backdrop-filter: blur(4px);
+            z-index: 2;
+        }
+
+        /* --- 3D GRID LAYOUT --- */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 2 Columns */
+            gap: 20px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+
+        /* --- ULTRA 3D CARD DESIGN --- */
+        .card {
+            position: relative;
+            height: 140px; /* Fixed height for consistency */
+            border-radius: 20px;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+            
+            /* The 3D Magic: Gradient Background + Multi-layer Shadows */
+            background: linear-gradient(145deg, #161618, #0a0a0c);
+            box-shadow:  
+                8px 8px 16px rgba(0,0,0,0.6), 
+                -4px -4px 12px rgba(255,255,255,0.05),
+                inset 1px 1px 0 rgba(255,255,255,0.1); /* Inner rim light */
+            
+            border: 1px solid rgba(255,255,255,0.02);
+            overflow: hidden;
+        }
+
+        /* Hover Lift Effect */
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 15px 30px rgba(0,0,0,0.8), 
+                0 0 15px var(--glow-color); /* Dynamic Glow Color */
+            border-color: var(--glow-color);
+        }
+
+        /* Icon Styling */
+        .card i {
+            font-size: 32px;
+            margin-bottom: 12px;
+            /* Gradient Icon */
+            background: linear-gradient(180deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+            transition: 0.3s;
+        }
+
+        .card:hover i {
+            background: #fff;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: #fff;
+            text-shadow: 0 0 15px var(--glow-color);
+        }
+
+        .card span {
+            color: #ccc;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* Specific Glow Colors for each card */
+        .tiktok-glow { --glow-color: #d946ef; } /* Purple/Pink */
+        .sora-glow { --glow-color: #00f3ff; }   /* Cyan */
+        .paksim-glow { --glow-color: #00ff88; } /* Green */
+        .tv-glow { --glow-color: #ff5e00; }     /* Orange */
+        .apk-glow { --glow-color: #2b6eff; }    /* Blue */
+
+        /* Badge Styling */
+        .badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--glow-color);
+            color: #000;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px var(--glow-color);
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            background-color: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(10px);
+            overflow-x: hidden;
+            transition: 0.4s;
+            padding-top: 60px;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 16px;
+            color: #ccc;
+            display: block;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: var(--primary);
+            background: rgba(255,255,255,0.05);
+            padding-left: 30px;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            border: none;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            margin-top: auto;
+            color: #555;
+            font-size: 11px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
     </style>
 </head>
 <body>
 
     <header>
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
-        <h1>AI <span>DARK</span> WORLD</h1>
-        <p style="color:#666; font-size:12px; margin-top:5px;">SYSTEM ONLINE: SELECT MODULE</p>
+        <button class="menu-btn" onclick="toggleNav()"><i class="fas fa-bars"></i></button>
+        <div class="logo">AI DARK WORLD</div>
+        <div style="width: 24px;"></div> 
     </header>
 
     <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="close-btn" onclick="toggleMenu()">&times;</a>
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
-        <br>
-        <div style="padding-left: 25px; color: #666; font-size: 12px;">SOCIAL</div>
-        <a href="TikTok.html" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
-        <a href="#" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+        <a href="TikTok.html"><i class="fab fa-tiktok"></i> TikTok Downloader</a>
+        <a href="sora.html"><i class="fas fa-video"></i> Sora AI</a>
+        <a href="#" onclick="openLink()"><i class="fas fa-envelope"></i> Contact</a>
     </div>
 
-    <div class="ad-banner" onclick="openDirectLink()">[ TOP AD BANNER - CLICK HERE ]</div>
+    <div class="ad-container" onclick="openLink()">
+        <div class="ad-tag">SPONSORED</div>
+        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=600&auto=format&fit=crop" class="ad-image" alt="Tech Banner">
+    </div>
 
-    <div class="grid-container">
-        <a href="paksim.html" class="grid-card">
-            <div class="grid-icon"><i class="fas fa-sim-card"></i></div>
-            <div class="grid-name">Pak Sim Data</div>
+    <div class="grid">
+        
+        <a href="TikTok.html" class="card tiktok-glow">
+            <div class="badge">HOT</div>
+            <i class="fab fa-tiktok"></i>
+            <span>TikTok DL</span>
         </a>
 
-        <a href="AllTv.html" class="grid-card">
-            <div class="grid-icon"><i class="fas fa-tv"></i></div>
-            <div class="grid-name">Infinity Live TV</div>
+        <a href="sora.html" class="card sora-glow">
+            <div class="badge">NEW</div>
+            <i class="fas fa-video"></i>
+            <span>Sora AI</span>
         </a>
 
-        <a href="sora.html" class="grid-card">
-            <div class="grid-icon"><i class="fas fa-video"></i></div>
-            <div class="grid-name">Sora AI Video</div>
+        <a href="apk.html" class="card apk-glow">
+            <i class="fab fa-android"></i>
+            <span>Premium APKs</span>
         </a>
 
-        <a href="TikTok.html" class="grid-card" style="border-color: var(--primary);">
-            <div class="grid-icon"><i class="fab fa-tiktok"></i></div>
-            <div class="grid-name">TikTok DL <span class="new-badge">NEW</span></div>
+        <a href="paksim.html" class="card paksim-glow">
+            <i class="fas fa-sim-card"></i>
+            <span>Pak Sim Database</span>
         </a>
 
-        <a href="vehicledetails.html" class="grid-card">
-            <div class="grid-icon"><i class="fas fa-car"></i></div>
-            <div class="grid-name">Vehicle Info</div>
+        <a href="AllTv.html" class="card tv-glow" style="grid-column: span 2;">
+            <i class="fas fa-tv"></i>
+            <span>Infinity TV</span>
         </a>
 
-        <a href="image.html" class="grid-card">
-            <div class="grid-icon"><i class="fas fa-robot"></i></div>
-            <div class="grid-name">AI Image Gen</div>
-        </a>
+    </div>
 
-        <a href="apk.html" class="grid-card">
-            <div class="grid-icon"><i class="fab fa-android"></i></div>
-            <div class="grid-name">Mod APKs</div>
-        </a>
-    </div> 
-    
-    <div class="ad-banner" onclick="openDirectLink()">[ BOTTOM AD BANNER - CLICK HERE ]</div>
+    <div class="ad-container" style="height: 100px;" onclick="openLink()">
+        <div class="ad-tag">AD</div>
+        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop" class="ad-image" alt="Abstract Banner">
+    </div>
 
-    <footer style="margin-top: 30px; font-size: 12px; color: #555;">&copy; 2025 AI DARK WORLD SYSTEM</footer>
+    <footer>
+        &copy; 2025 AI DARK WORLD SYSTEM
+    </footer>
 
     <script>(function(s){s.dataset.zone='10350347',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
     <script src="https://quge5.com/88/tag.min.js" data-zone="194543" async data-cfasync="false"></script>
+
     <script>
-        // Updated Monetag Link
-        function openDirectLink() { window.open("https://otieu.com/4/10322143", "_blank"); }
-        function toggleMenu() {
+        // Apka Monetag Link
+        function openLink() {
+            window.open("https://otieu.com/4/10322143", "_blank");
+        }
+
+        // Sidebar Logic
+        function toggleNav() {
             var sidebar = document.getElementById("mySidebar");
-            sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
+            if (sidebar.style.width === "250px") {
+                sidebar.style.width = "0";
+            } else {
+                sidebar.style.width = "250px";
+            }
         }
     </script>
+
 </body>
-                                 </html>
-            
+                                             </html>
+                
