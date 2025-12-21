@@ -20,6 +20,7 @@
             --glass-border: rgba(0, 243, 255, 0.3);
             --text-main: #ffffff;
             --glow: 0 0 15px rgba(0, 243, 255, 0.5);
+            --error: #ff3333;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Share Tech Mono', monospace; }
@@ -27,30 +28,24 @@
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
-            height: 100vh; /* Full Viewport Height */
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Center Vertically */
+            justify-content: center;
             padding: 20px;
-            overflow: hidden; /* Prevent scrolling usually */
+            overflow: hidden;
             position: relative;
         }
 
         /* --- LIVE BACKGROUND --- */
         #bgCanvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
             background: radial-gradient(circle at center, #001015 0%, #000000 100%);
         }
 
         .container {
-            width: 100%; max-width: 600px;
-            z-index: 10;
-            /* Extra spacing to ensure it doesn't hit edges */
-            padding: 10px;
+            width: 100%; max-width: 600px; z-index: 10; padding: 10px;
         }
 
         /* --- HEADER --- */
@@ -71,13 +66,13 @@
 
         /* --- AD BANNER --- */
         .ad-space {
-            padding: 15px; border: 1px dashed rgba(0, 243, 255, 0.3);
+            padding: 15px; border-radius: 12px;
+            border: 1px dashed rgba(0, 243, 255, 0.3);
             text-align: center; color: rgba(255, 255, 255, 0.5);
             font-size: 11px; cursor: pointer; transition: 0.3s;
-            background: rgba(0,0,0,0.5); margin-bottom: 25px;
-            border-radius: 6px;
+            background: rgba(0,0,0,0.3); margin-bottom: 25px;
         }
-        .ad-space:hover { border-color: var(--primary); color: var(--primary); background: rgba(0, 243, 255, 0.1); }
+        .ad-space:hover { border-color: var(--primary); color: var(--primary); background: rgba(0, 243, 255, 0.05); }
 
         /* --- INPUT SECTION --- */
         .input-box {
@@ -108,46 +103,37 @@
         }
         .btn-search:hover { background: #fff; box-shadow: 0 0 20px var(--primary); }
 
-        /* --- HACKING TERMINAL (SIMULATION) --- */
+        /* --- HACKING TERMINAL --- */
         .terminal-window {
-            display: none; /* Hidden by default */
-            background: #000;
+            display: none; background: #000;
             border: 1px solid var(--primary);
-            padding: 15px;
-            height: 250px;
-            overflow-y: auto;
-            font-size: 12px;
-            color: var(--primary);
+            padding: 15px; height: 250px; overflow-y: auto;
+            font-size: 12px; color: var(--primary);
             box-shadow: inset 0 0 20px rgba(0, 50, 60, 0.8);
-            margin-bottom: 20px;
-            border-left: 4px solid var(--primary);
+            margin-bottom: 20px; border-left: 4px solid var(--primary);
             border-radius: 4px;
         }
 
         .log-line { margin-bottom: 4px; opacity: 0.9; }
         .log-success { color: #fff; font-weight: bold; text-shadow: 0 0 5px var(--primary); }
-        .log-error { color: #ff3333; font-weight: bold; }
+        .log-error { color: var(--error); font-weight: bold; }
         .cursor { display: inline-block; width: 8px; height: 14px; background: var(--primary); animation: blink 0.8s infinite; vertical-align: middle; }
 
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         /* --- DATA CARD --- */
-        /* Scrollable container for results if list is long */
         #results { max-height: 40vh; overflow-y: auto; }
         
         .result-card {
             background: rgba(0, 10, 15, 0.9);
             border: 1px solid var(--primary);
-            border-radius: 6px;
-            margin-bottom: 15px;
-            position: relative;
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+            border-radius: 6px; margin-bottom: 15px;
+            position: relative; box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
             animation: slideUp 0.5s ease;
         }
         
         .card-header {
-            background: rgba(0, 243, 255, 0.1);
-            padding: 8px 15px;
+            background: rgba(0, 243, 255, 0.1); padding: 8px 15px;
             border-bottom: 1px solid var(--primary);
             display: flex; justify-content: space-between;
             font-size: 11px; color: var(--primary); font-weight: bold;
@@ -164,12 +150,18 @@
         .label { font-size: 10px; color: #888; letter-spacing: 1px; }
         .value { font-size: 15px; color: #fff; text-shadow: 0 0 2px rgba(255,255,255,0.5); margin-top: 2px; }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        /* Manual Link Button */
+        .manual-btn {
+            display: block; width: 100%; padding: 10px; margin-top: 10px;
+            background: #222; border: 1px solid #444; color: #fff;
+            text-align: center; text-decoration: none; font-size: 12px;
+            cursor: pointer; transition: 0.3s;
+        }
+        .manual-btn:hover { border-color: var(--primary); color: var(--primary); }
 
-        /* Scrollbar styling */
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: var(--primary); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 2px; }
 
     </style>
 </head>
@@ -187,7 +179,7 @@
 
         <div class="input-box">
             <div class="prefix">>_</div>
-            <input type="tel" id="phoneInput" placeholder="Enter Number...">
+            <input type="tel" id="phoneInput" placeholder="Enter Number (03xxxxxxxxx)">
             <button class="btn-search" onclick="initiateHack()">SEARCH</button>
         </div>
 
@@ -204,7 +196,7 @@
     <script src="https://quge5.com/88/tag.min.js" data-zone="194543" async data-cfasync="false"></script>
 
     <script>
-        // --- 1. LIVE BACKGROUND (Cyan Theme) ---
+        // --- 1. LIVE BACKGROUND ---
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -224,18 +216,16 @@
                 if (this.y > canvas.height) this.y = 0; if (this.y < 0) this.y = canvas.height;
             }
             draw() {
-                ctx.fillStyle = '#00f3ff'; // Cyan Particles
-                ctx.beginPath();
+                ctx.fillStyle = '#00f3ff'; ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
 
         function init() { for(let i=0; i<canvas.width*canvas.height/9000; i++) particles.push(new Particle()); }
         function animate() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; ctx.fillRect(0,0,canvas.width,canvas.height); 
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.1)'; ctx.fillRect(0,0,canvas.width,canvas.height); 
             particles.forEach(p => { p.update(); p.draw(); });
             
-            // Draw lines (Cyan)
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -256,11 +246,11 @@
 
         // --- 2. HACKING LOGIC ---
         const DIRECT_LINK = "https://otieu.com/4/10322143";
+        const FALLBACK_LINK = "https://paksimdata.com"; // Backup website link
         
         function openDirectLink() { window.open(DIRECT_LINK, '_blank'); }
 
         async function initiateHack() {
-            // 1. Open Ad
             openDirectLink();
 
             const input = document.getElementById('phoneInput').value;
@@ -271,10 +261,13 @@
 
             if(!input) return alert("ENTER TARGET NUMBER");
 
-            // Format Number
-            let query = input;
-            if (query.startsWith('0')) query = '92' + query.substring(1); 
-            else if (query.startsWith('+92')) query = query.substring(1);
+            // Format Number: Force to 03XXXXXXXXX format for most APIs
+            let query = input.replace(/\D/g, ''); // Remove non-digits
+            if (query.startsWith('92')) query = '0' + query.substring(2);
+            if (query.length !== 11) {
+                 alert("Invalid Format. Use 03XXXXXXXXX");
+                 return;
+            }
 
             // UI Reset
             resultsDiv.innerHTML = '';
@@ -283,69 +276,94 @@
             btn.disabled = true;
             btn.innerText = "ACCESSING...";
 
-            // 2. FAKE HACKING SEQUENCE (Updated for Cyan Theme)
+            // FAKE HACKING SEQUENCE
             const logs = [
                 `[root@ai-world ~]# targeting: ${query}`,
-                `[root@ai-world ~]# initiating handshake...`,
-                `[root@ai-world ~]# bypassing security (Port 443)...`,
-                `[root@ai-world ~]# injecting AiDark payload...`,
-                `[root@ai-world ~]# access granted!`,
-                `[root@ai-world ~]# decrypting user_db...`,
-                `[root@ai-world ~]# fetching cnic records...`,
-                `[root@ai-world ~]# 100% complete.`
+                `[root@ai-world ~]# bypassing firewall (Port 443)...`,
+                `[root@ai-world ~]# trying server 1 (Legacy)...`,
+                `[root@ai-world ~]# injecting payload...`
             ];
 
             for (const log of logs) {
                 await typeLog(log, content);
-                terminal.scrollTop = terminal.scrollHeight; // Auto scroll
+                terminal.scrollTop = terminal.scrollHeight;
             }
 
-            // 3. ACTUAL API FETCH
-            try {
-                const apiUrl = 'https://corsproxy.io/?' + encodeURIComponent('https://legendxdata.site/Api/simdata.php?phone=' + query);
-                const res = await fetch(apiUrl);
-                const data = await res.json();
+            // ATTEMPT API CALLS
+            // List of potential APIs (Free ones die fast, we try multiple)
+            const apis = [
+                // Try format 1
+                `https://corsproxy.io/?` + encodeURIComponent(`https://legendxdata.site/Api/simdata.php?phone=${query}`),
+                // Try format 2 (Hypothetical fallback)
+                `https://corsproxy.io/?` + encodeURIComponent(`http://simdatabase-api.example/api.php?num=${query}`) 
+            ];
 
-                terminal.style.display = 'none'; // Hide terminal
-                btn.disabled = false;
-                btn.innerText = "SEARCH";
+            let success = false;
 
-                let records = [];
-                if(data.data) records = data.data;
-                else if(data.results) records = data.results;
-                else if(Array.isArray(data)) records = data;
+            for (let i = 0; i < apis.length; i++) {
+                try {
+                     await typeLog(`[root@ai-world ~]# attempting connection to node ${i+1}...`, content);
+                     
+                     // Short timeout for fetch
+                     const controller = new AbortController();
+                     const timeoutId = setTimeout(() => controller.abort(), 8000);
+                     
+                     const res = await fetch(apis[i], { signal: controller.signal });
+                     clearTimeout(timeoutId);
+                     
+                     const data = await res.json();
 
-                if(records.length > 0) {
-                    records.forEach((rec, index) => {
-                        let html = `
-                            <div class="result-card">
-                                <div class="card-header">
-                                    <span>RECORD #${index + 1}</span>
-                                    <span>CONFIDENTIAL</span>
-                                </div>
-                                <div class="card-body">`;
-                        
-                        for(let key in rec) {
-                            if(rec[key]) {
-                                html += `
-                                    <div class="data-row">
-                                        <span class="label">${key.toUpperCase()}</span>
-                                        <span class="value">${rec[key]}</span>
-                                    </div>`;
+                     let records = [];
+                     if(data.data) records = data.data;
+                     else if(data.results) records = data.results;
+                     else if(Array.isArray(data)) records = data;
+
+                     if(records.length > 0) {
+                         success = true;
+                         await typeLog(`[root@ai-world ~]# ACCESS GRANTED!`, content);
+                         
+                         terminal.style.display = 'none';
+                         btn.disabled = false;
+                         btn.innerText = "SEARCH";
+                         
+                         records.forEach((rec, index) => {
+                            let html = `
+                                <div class="result-card">
+                                    <div class="card-header">
+                                        <span>RECORD #${index + 1}</span>
+                                        <span>CONFIDENTIAL</span>
+                                    </div>
+                                    <div class="card-body">`;
+                            for(let key in rec) {
+                                if(rec[key]) {
+                                    html += `
+                                        <div class="data-row">
+                                            <span class="label">${key.toUpperCase()}</span>
+                                            <span class="value">${rec[key]}</span>
+                                        </div>`;
+                                }
                             }
-                        }
-                        html += `</div></div>`;
-                        resultsDiv.innerHTML += html;
-                    });
-                } else {
-                    content.innerHTML += `<div class='log-line log-error'>[!] DATA NOT FOUND</div>`;
-                    terminal.style.display = 'block';
-                    btn.disabled = false;
-                    btn.innerText = "SEARCH";
+                            html += `</div></div>`;
+                            resultsDiv.innerHTML += html;
+                        });
+                        break; // Stop loop if success
+                     }
+                } catch(e) {
+                    await typeLog(`[root@ai-world ~]# node ${i+1} failed / timeout.`, content);
                 }
+            }
 
-            } catch(e) {
-                content.innerHTML += `<div class='log-line log-error'>[!] SERVER CONNECTION FAILED</div>`;
+            if (!success) {
+                await typeLog(`[root@ai-world ~]# CRITICAL: ALL NODES OFFLINE`, content);
+                await typeLog(`[root@ai-world ~]# Generating alternative link...`, content);
+                
+                // Show manual link if API fails
+                content.innerHTML += `
+                    <div class='log-line log-error'>[!] SERVER OVERLOADED</div>
+                    <a href="${FALLBACK_LINK}" target="_blank" class="manual-btn">
+                        <i class="fas fa-external-link-alt"></i> OPEN MANUAL DATABASE (SERVER 2)
+                    </a>
+                `;
                 btn.disabled = false;
                 btn.innerText = "RETRY";
             }
@@ -355,12 +373,10 @@
             return new Promise(resolve => {
                 const div = document.createElement('div');
                 div.className = 'log-line';
-                if(text.includes('granted') || text.includes('complete')) div.className += ' log-success';
+                if(text.includes('GRANTED')) div.className += ' log-success';
                 div.textContent = text;
                 container.appendChild(div);
-                
-                // Faster typing for modern feel
-                const delay = Math.floor(Math.random() * 400) + 200;
+                const delay = Math.floor(Math.random() * 300) + 100;
                 setTimeout(resolve, delay);
             });
         }
